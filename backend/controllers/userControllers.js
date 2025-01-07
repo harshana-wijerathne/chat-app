@@ -5,7 +5,7 @@ const generateToken = require("../config/generateToken");
 const registerUser = async (req, res) => {
   const { name, email, password, pic } = req.body;
   if (!name || !email || !password) {
-    resizeBy.status(400);
+    res.status(400);
     throw new Error("Please Enter all the Field");
   }
 
