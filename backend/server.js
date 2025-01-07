@@ -15,23 +15,23 @@ const app = express();
 
 app.use(express.json());
 
-//app.use(cors);
-app.use(notFound);
-app.use(errorHandler);
-
-const PORT = process.env.PORT || 5000;
-app.listen(5000, console.log(`Server Started on PORT ${PORT}`.yellow.bold));
-
 app.get("/", (req, res) => {
   res.send("API is Running Successfully");
 });
 
+app.use("/api/user", userRoutes);
+//app.use("/api/chat", chatRoutes);
+
+//app.use(cors);
+//app.use(notFound);
+//app.use(errorHandler);
+
+const PORT = process.env.PORT || 5000;
+app.listen(5000, console.log(`Server Started on PORT ${PORT}`.yellow.bold));
+
 // app.get("/api/chat", (req, res) => {
 //   res.send(chats);
 // });
-
-app.use("/api/user", userRoutes);
-app.use("/api/chat", chatRoutes);
 
 app.get("/api/chat/:id", (req, res) => {
   const singleChat = chats.find((c) => c._id === req.params.id);
