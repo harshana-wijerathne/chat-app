@@ -1,5 +1,5 @@
 import { Fieldset, Input, VStack } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Field } from "../ui/field";
 import { PasswordInput } from "../ui/password-input";
 import { ToastContainer, toast } from "react-toastify";
@@ -7,17 +7,32 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Button } from "../ui/button";
+import { Alert } from "../ui/alert";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [Loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [alertMessage, setAlertMessage] = useState("");
+
+  useEffect(() => {
+    if (alertMessage) {
+      const timer = setTimeout(() => {
+        setAlertMessage("");
+      }, 5000); // 5 seconds
+
+      return () => clearTimeout(timer); // Cleanup timer on unmount or state change
+    }
+  }, [alertMessage]);
 
   const submitHander = async () => {
     setLoading(true);
     if (!email || !password) {
-      toast.warn("Please fill all the fields in login!");
+      //toast.warn("Please fill all the fields in login!");
+
+      setAlertMessage("Please fill all the fields in login!");
+
       setLoading(false);
       return;
     }
@@ -32,11 +47,12 @@ const Login = () => {
         { email, password },
         config
       );
-      toast.success("Login Successful");
       //setUser(data);
       localStorage.setItem("userInfo", JSON.stringify(data));
       setLoading(false);
       navigate("/chats");
+      toast.success("Login Successful");
+      setAlertMessage("Login Successful");
     } catch (error) {
       toast.warn("Error Occured!");
       setLoading(false);
@@ -45,6 +61,8 @@ const Login = () => {
 
   return (
     <VStack>
+      {/* Conditionally render the Alert */}
+
       <Fieldset.Root size="lg" maxW="md" invalid>
         <Fieldset.Content>
           <Field label="Email">
@@ -83,6 +101,7 @@ const Login = () => {
         draggable
         theme="light"
       /> */}
+      {alertMessage && <Alert status="error" title={alertMessage} />}
     </VStack>
   );
 };

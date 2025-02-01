@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Tabs, Container, Box, Text } from "@chakra-ui/react";
 import Login from "../components/authentication/Login";
 import SignUp from "../components/authentication/SignUp";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("userInfo"));
+    if (user) navigate("/chat");
+  }, [navigate]);
+
   return (
     <Container justifyItems="center">
       <Box

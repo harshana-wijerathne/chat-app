@@ -3,6 +3,7 @@ import "./App.css";
 import { Button } from "@chakra-ui/react";
 import HomePage from "./pages/HomePage";
 import ChatPage from "./pages/ChatPage";
+import testpage from "./pages/testpage";
 
 function App() {
   return (

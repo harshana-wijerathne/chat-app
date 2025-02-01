@@ -4,6 +4,7 @@
   "private": true,
   "proxy": "http://127.0.0.1:5000",
   "dependencies": {
+    "@chakra-ui/layout": "^2.3.1",
     "@chakra-ui/react": "^3.2.3",
     "@emotion/react": "^11.14.0",
     "@testing-library/jest-dom": "^5.17.0",

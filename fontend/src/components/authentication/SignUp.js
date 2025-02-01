@@ -44,6 +44,7 @@ const SignUp = () => {
       // });
       toast.warn("Passwords Do not match ");
       console.log("pasword mismatch");
+      setLoading(false);
       return;
     }
 
@@ -61,8 +62,8 @@ const SignUp = () => {
       toast.success("Registration Successfull ");
       localStorage.setItem("userInfo", JSON.stringify(data));
       setLoading(false);
-      navigate("/chats");
       toast.success("Registration Successfull ");
+      navigate("/chats");
     } catch (error) {
       toast.error("Error Occured");
 
