@@ -6,7 +6,7 @@ export const Tooltip = React.forwardRef(function Tooltip(props, ref) {
     showArrow,
     children,
     disabled,
-    portalled,
+    portalled = true,
     content,
     contentProps,
     portalRef,
