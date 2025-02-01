@@ -1,48 +1,33 @@
-("use client");
-import React from "react";
-
-import { Button } from "@chakra-ui/react";
 import {
-  DialogBody,
+  DialogRoot,
   DialogContent,
   DialogHeader,
-  DialogRoot,
   DialogTitle,
-  DialogTrigger,
+  DialogBody,
+  DialogFooter,
+  DialogActionTrigger,
 } from "../ui/dialog";
-import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "../ui/menu";
-import { useRef } from "react";
+import { Button } from "@chakra-ui/react";
+import { Image } from "@chakra-ui/react";
 
-const ProfileModel = () => {
-  const contentRef = useRef < HTMLDivElement > null;
+const ProfileModel = ({ title, pic, isOpen, onClose, children }) => {
   return (
-    <DialogRoot>
-      <DialogTrigger asChild>
-        <Button variant="outline" size="sm">
-          Open
-        </Button>
-      </DialogTrigger>
-      <DialogContent ref={contentRef}>
+    <DialogRoot open={isOpen} onOpenChange={onClose}>
+      <DialogContent>
         <DialogHeader>
-          <DialogTitle>Welcome to the menu</DialogTitle>
+          <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
-        <DialogBody spaceY="4">
-          <MenuRoot>
-            <MenuTrigger asChild>
-              <Button variant="outline" size="sm">
-                Menu
-              </Button>
-            </MenuTrigger>
-            <MenuContent portalRef={contentRef}>
-              <MenuItem value="new-txt">New Text File</MenuItem>
-              <MenuItem value="new-file">New File...</MenuItem>
-              <MenuItem value="new-win">New Window</MenuItem>
-              <MenuItem value="open-file">Open File...</MenuItem>
-              <MenuItem value="export">Export</MenuItem>
-            </MenuContent>
-          </MenuRoot>
-          I am Harshana
+        <DialogBody>
+          <div>
+            {" "}
+            <Image src={pic} />
+          </div>
         </DialogBody>
+        <DialogFooter>
+          <DialogActionTrigger asChild>
+            <Button onClick={onClose}>Close</Button>
+          </DialogActionTrigger>
+        </DialogFooter>
       </DialogContent>
     </DialogRoot>
   );

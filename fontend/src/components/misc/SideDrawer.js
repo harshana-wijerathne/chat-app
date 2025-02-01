@@ -8,6 +8,7 @@ import { HiSortAscending } from "react-icons/hi";
 import { Avatar } from "../ui/avatar";
 import { ChatState } from "../../context/ChatProvider";
 import ProfileModel from "./ProfileModel";
+import { useNavigate } from "react-router-dom";
 
 const SideDrawer = () => {
   const [search, setSearch] = useState("");
@@ -15,6 +16,15 @@ const SideDrawer = () => {
   const [loading, setLoading] = useState(false);
   const [loadingChat, setLoadingChat] = useState(false);
   const { user } = ChatState();
+  const navigate = useNavigate();
+  const [isProfileDialogOpen, setIsProfileDialogOpen] = useState(false);
+
+  const logoutHandler = () => {
+    localStorage.removeItem("userInfo");
+    navigate("/");
+    console.log("logged Out");
+  };
+
   return (
     <div>
       <Box
@@ -59,12 +69,20 @@ const SideDrawer = () => {
               </Button>
             </MenuTrigger>
             <MenuContent>
-              <MenuItem>My Profile</MenuItem>
-              <MenuItem>Logout</MenuItem>
+              <MenuItem onClick={() => setIsProfileDialogOpen(true)}>
+                My Profile
+              </MenuItem>
+              <MenuItem onClick={logoutHandler}>Log Out</MenuItem>
             </MenuContent>
           </MenuRoot>
         </div>
       </Box>
+      <ProfileModel
+        title={user.name}
+        pic={user.pic}
+        isOpen={isProfileDialogOpen}
+        onClose={() => setIsProfileDialogOpen(false)}
+      ></ProfileModel>
     </div>
   );
 };
