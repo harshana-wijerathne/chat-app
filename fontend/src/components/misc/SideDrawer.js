@@ -1,4 +1,4 @@
-import { Box, Button, Icon, Text } from "@chakra-ui/react";
+import { Box, Button, Icon, Text, Input } from "@chakra-ui/react";
 import React from "react";
 import { useState } from "react";
 import { Tooltip } from "../ui/tooltip";
@@ -9,6 +9,19 @@ import { Avatar } from "../ui/avatar";
 import { ChatState } from "../../context/ChatProvider";
 import ProfileModel from "./ProfileModel";
 import { useNavigate } from "react-router-dom";
+import {
+  DrawerActionTrigger,
+  DrawerBackdrop,
+  DrawerBody,
+  DrawerCloseTrigger,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerRoot,
+  DrawerTitle,
+  DrawerTrigger,
+} from "../ui/drawer";
+import { findAllByAltText } from "@testing-library/react";
 
 const SideDrawer = () => {
   const [search, setSearch] = useState("");
@@ -18,12 +31,15 @@ const SideDrawer = () => {
   const { user } = ChatState();
   const navigate = useNavigate();
   const [isProfileDialogOpen, setIsProfileDialogOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const logoutHandler = () => {
     localStorage.removeItem("userInfo");
     navigate("/");
     console.log("logged Out");
   };
+
+  const handleSearch = () => {};
 
   return (
     <div>
@@ -41,7 +57,11 @@ const SideDrawer = () => {
           positioning={{ placement: "right-end" }}
           content="Search User to chat"
         >
-          <Button>
+          <Button
+            onClick={() => {
+              open ? setOpen(false) : setOpen(true);
+            }}
+          >
             <i className="fa fa-search"></i>
             <Text display={{ base: "none", md: "flex" }}>Search User</Text>
           </Button>
@@ -83,6 +103,42 @@ const SideDrawer = () => {
         isOpen={isProfileDialogOpen}
         onClose={() => setIsProfileDialogOpen(false)}
       ></ProfileModel>
+      <DrawerRoot
+        open={open}
+        onClose={() => setOpen(false)}
+        placement={"start"}
+      >
+        {/* <DrawerBackdrop bg={"yellow"} /> */}
+        <DrawerContent>
+          <DrawerHeader>
+            <Box display={"flex"} pb={2}>
+              <Input
+                placeholder="Search by name or email"
+                mr={2}
+                width={"190px"}
+                value={search}
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                }}
+              ></Input>
+              <Button onClick={handleSearch}>Go</Button>
+            </Box>
+          </DrawerHeader>
+          <DrawerBody>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </DrawerBody>
+          <DrawerFooter>
+            <DrawerActionTrigger asChild>
+              <Button variant="outline">Cancel</Button>
+            </DrawerActionTrigger>
+            <Button>Save</Button>
+          </DrawerFooter>
+          <DrawerCloseTrigger onClick={() => setOpen(false)} />
+        </DrawerContent>
+      </DrawerRoot>
     </div>
   );
 };
