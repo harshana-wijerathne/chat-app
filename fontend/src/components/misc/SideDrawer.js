@@ -1,6 +1,6 @@
 import { Box, Button, Icon, Text, Input } from "@chakra-ui/react";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Tooltip } from "../ui/tooltip";
 import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "../ui/menu";
 import { LuChevronDown } from "react-icons/lu";
@@ -21,7 +21,10 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "../ui/drawer";
-import { findAllByAltText } from "@testing-library/react";
+import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
+import ChatLoading from "../ChatLoading";
+import UserListItem from "../user-avatar/UserListItem";
 
 const SideDrawer = () => {
   const [search, setSearch] = useState("");
@@ -33,13 +36,46 @@ const SideDrawer = () => {
   const [isProfileDialogOpen, setIsProfileDialogOpen] = useState(false);
   const [open, setOpen] = useState(false);
 
+  useEffect(() => {
+    if (!search) return; // Prevent calling on empty search
+
+    const delayDebounce = setTimeout(() => {
+      handleSearch();
+    }, 500); // Adjust delay as needed
+
+    return () => clearTimeout(delayDebounce); // Cleanup timeout on each update
+  }, [search]);
+
   const logoutHandler = () => {
     localStorage.removeItem("userInfo");
     navigate("/");
     console.log("logged Out");
   };
 
-  const handleSearch = () => {};
+  const accesChat = (userId) => {};
+
+  const handleSearch = async () => {
+    if (!search) {
+      console.log("Empty");
+      toast.warn("Please Enter something to search");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+
+      const { data } = await axios.get(`/api/user?search=${search}`, config);
+      setLoading(false);
+      setSearchResult(data);
+    } catch (error) {
+      toast.warn("Error Occured!");
+    }
+  };
 
   return (
     <div>
@@ -125,10 +161,28 @@ const SideDrawer = () => {
             </Box>
           </DrawerHeader>
           <DrawerBody>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
+            {loading ? (
+              <ChatLoading />
+            ) : (
+              searchResult?.map((user) => (
+                <UserListItem
+                  key={user._id}
+                  user={user}
+                  handleFunction={() => {
+                    accesChat(user._id);
+                  }}
+                />
+              ))
+            )}
+            <ToastContainer
+              position="bottom-left"
+              autoClose={2000}
+              hideProgressBar={false}
+              closeOnClick
+              pauseOnHover
+              draggable
+              theme="light"
+            />
           </DrawerBody>
           <DrawerFooter>
             <DrawerActionTrigger asChild>
