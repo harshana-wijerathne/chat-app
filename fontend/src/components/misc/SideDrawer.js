@@ -1,4 +1,4 @@
-import { Box, Button, Icon, Text, Input } from "@chakra-ui/react";
+import { Box, Button, Icon, Text, Input, Spinner } from "@chakra-ui/react";
 import React from "react";
 import { useState, useEffect } from "react";
 import { Tooltip } from "../ui/tooltip";
@@ -31,7 +31,7 @@ const SideDrawer = () => {
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingChat, setLoadingChat] = useState(false);
-  const { user } = ChatState();
+  const { user, setSelectedChat, chats, setChats } = ChatState();
   const navigate = useNavigate();
   const [isProfileDialogOpen, setIsProfileDialogOpen] = useState(false);
   const [open, setOpen] = useState(false);
@@ -52,7 +52,25 @@ const SideDrawer = () => {
     console.log("logged Out");
   };
 
-  const accesChat = (userId) => {};
+  const accesChat = async (userId) => {
+    try {
+      setLoadingChat(true);
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+
+      const { data } = await axios.post("/api/chat", { userId }, config);
+      if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
+      setSelectedChat(data);
+      setLoadingChat(false);
+      setOpen(false);
+    } catch (error) {
+      toast.warn("Error fetching the chat");
+    }
+  };
 
   const handleSearch = async () => {
     if (!search) {
@@ -183,13 +201,8 @@ const SideDrawer = () => {
               draggable
               theme="light"
             />
+            {loadingChat && <Spinner ml="auto" display={"flex"} />}
           </DrawerBody>
-          <DrawerFooter>
-            <DrawerActionTrigger asChild>
-              <Button variant="outline">Cancel</Button>
-            </DrawerActionTrigger>
-            <Button>Save</Button>
-          </DrawerFooter>
           <DrawerCloseTrigger onClick={() => setOpen(false)} />
         </DrawerContent>
       </DrawerRoot>
