@@ -7,7 +7,7 @@ import ChatLoading from "../ChatLoading";
 import { getSender } from "../../config/ChatLogics";
 import GroupChatModel from "./GroupChatModel";
 
-const MyCahts = () => {
+const MyCahts = ({fetchAgain}) => {
   const [loggedUser, setLoggedUser] = useState();
   const { user, selectedChat, setSelectedChat, chats, setChats } = ChatState();
 
@@ -32,7 +32,7 @@ const MyCahts = () => {
     setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
     fetchChats();
     // eslint-disable-next-line
-  }, []);
+  }, [fetchAgain]);
   return (
     <Box
       display={{ base: selectedChat ? "none" : "flex", md: "flex" }}
