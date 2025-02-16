@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { toast } from "react-toastify";
 import { ChatState } from "../../context/ChatProvider";
 import axios from "axios";
 import { Box, Stack, Text } from "@chakra-ui/react";
-import { Button } from "../ui/button";
-import { Icon } from "@chakra-ui/react";
-import { HiHeart } from "react-icons/hi";
-import { RiArrowRightLine, RiMailLine } from "react-icons/ri";
-import { IoAdd } from "react-icons/io5";
+import { ToastContainer, toast } from "react-toastify";
 import ChatLoading from "../ChatLoading";
 import { getSender } from "../../config/ChatLogics";
+import GroupChatModel from "./GroupChatModel";
 
 const MyCahts = () => {
   const [loggedUser, setLoggedUser] = useState();
@@ -59,15 +55,7 @@ const MyCahts = () => {
         alignItems="center"
       >
         My Chats
-        <Button
-          display="flex"
-          flexDirection="row"
-          fontSize={{ base: "17px", md: "10px", lg: "17px" }}
-          _hover={{ bg: "blue" }}
-        >
-          <IoAdd />
-          New Group Chat
-        </Button>
+        <GroupChatModel />
       </Box>
       <Box
         display="flex"
@@ -112,6 +100,15 @@ const MyCahts = () => {
           <ChatLoading />
         )}
       </Box>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="light"
+      />
     </Box>
   );
 };
