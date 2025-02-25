@@ -52,6 +52,9 @@ const SingleChat = ({fetchAgain,setFetchAgain}) => {
               <>{selectedChat.chatName.toUpperCase()}</>
             )}
           </Text>
+          <Box>
+            
+          </Box>
         </>
       ) : (
         <Box
