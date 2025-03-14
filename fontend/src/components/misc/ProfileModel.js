@@ -6,13 +6,18 @@ import {
   DialogBody,
   DialogFooter,
   DialogActionTrigger,
+  DialogTrigger,
 } from "../ui/dialog";
-import { Button } from "@chakra-ui/react";
+import { Button, Text } from "@chakra-ui/react";
 import { Image } from "@chakra-ui/react";
 
 const ProfileModel = ({ title, pic, isOpen, onClose, children }) => {
   return (
     <DialogRoot open={isOpen} onOpenChange={onClose}>
+      <DialogTrigger asChild>
+        {/* <Button bg={'transparent'} color={'white'}>My Profile</Button>         */}
+        <Text>My Profile</Text>
+      </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
@@ -21,6 +26,10 @@ const ProfileModel = ({ title, pic, isOpen, onClose, children }) => {
           <div>
             {" "}
             <Image src={pic} />
+            <Text
+              fontSize={{ base: "28px", md: "30px" }}
+              fontFamily="Work sans"
+            ></Text>
           </div>
         </DialogBody>
         <DialogFooter>

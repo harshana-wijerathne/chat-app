@@ -144,19 +144,24 @@ const SideDrawer = () => {
             </MenuTrigger>
             <MenuContent>
               <MenuItem onClick={() => setIsProfileDialogOpen(true)}>
-                My Profile
+                <ProfileModel
+                  title={user.name}
+                  pic={user.pic}
+                  // isOpen={isProfileDialogOpen}
+                  // onClose={() => setIsProfileDialogOpen(false)}
+                ></ProfileModel>
               </MenuItem>
               <MenuItem onClick={logoutHandler}>Log Out</MenuItem>
             </MenuContent>
           </MenuRoot>
         </div>
       </Box>
-      <ProfileModel
+      {/* <ProfileModel
         title={user.name}
         pic={user.pic}
         isOpen={isProfileDialogOpen}
         onClose={() => setIsProfileDialogOpen(false)}
-      ></ProfileModel>
+      ></ProfileModel> */}
       <DrawerRoot
         open={open}
         onClose={() => setOpen(false)}

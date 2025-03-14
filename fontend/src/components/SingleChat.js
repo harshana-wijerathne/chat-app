@@ -45,15 +45,25 @@ const SingleChat = ({fetchAgain,setFetchAgain}) => {
             {!selectedChat.isGroupChat ? (
               <>
               {getSender(user,selectedChat.users)}
-              {/* <ProfileModel user = {getSenderFull(user,selectedChat.users)}/> */}
+              <ProfileModel user = {getSenderFull(user,selectedChat.users)}/>
 
               </>
             ) : (
               <>{selectedChat.chatName.toUpperCase()}</>
             )}
           </Text>
-          <Box>
-            
+          <Box 
+            display={'flex'}
+            flexDir={'column'}
+            justifyContent={'flex-end'}
+            p={3}
+            bg={'skyblue'}
+            w={'100%'}
+            h={'100%'}
+            borderRadius={'lg'}
+            overflowY={'hidden'}
+          >
+
           </Box>
         </>
       ) : (
