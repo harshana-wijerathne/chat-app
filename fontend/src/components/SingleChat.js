@@ -52,7 +52,10 @@ const SingleChat = ({fetchAgain,setFetchAgain}) => {
             ) : (
               <>
                   {selectedChat.chatName.toUpperCase()}
-                  <UpdateGroupChatModel/>
+                  <UpdateGroupChatModel
+                      fetchAgain={fetchAgain}
+                      setFetchAgain={setFetchAgain}
+                  />
               </>
             )}
           </Text>

@@ -6,4 +6,6 @@ const generateToken = (id) => {
   });
 };
 
+console.log(generateToken)
+
 module.exports = generateToken;

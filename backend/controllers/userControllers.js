@@ -39,6 +39,7 @@ const registerUser = async (req, res) => {
 const authUser = asyncHndler(async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
+    console.log(generateToken(user));
 
   if (user && user.matchPassword(password)) {
     res.json({
