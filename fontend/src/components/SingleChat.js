@@ -5,6 +5,7 @@ import { Button, ButtonGroup } from "@chakra-ui/react";
 import { FaArrowLeft } from "react-icons/fa";
 import {getSender , getSenderFull} from '../config/ChatLogics';
 import ProfileModel from "./misc/ProfileModel";
+import UpdateGroupChatModel from "./misc/UpdateGroupChatModel";
 
 const SingleChat = ({fetchAgain,setFetchAgain}) => {
       const {
@@ -31,7 +32,7 @@ const SingleChat = ({fetchAgain,setFetchAgain}) => {
             w="100%"
             fontFamily="Work sans"
             display="flex"
-            justifyContent={{ base: "space-between",md:'start' }}
+            justifyContent={{ base: "space-between",md:'space-between' }}
             alignItems="center"
           >
             <div>
@@ -45,11 +46,14 @@ const SingleChat = ({fetchAgain,setFetchAgain}) => {
             {!selectedChat.isGroupChat ? (
               <>
               {getSender(user,selectedChat.users)}
-              <ProfileModel user = {getSenderFull(user,selectedChat.users)}/>
+              <ProfileModel user = {getSenderFull(user,selectedChat.users)} title={getSenderFull(user,selectedChat.users).name} pic={getSenderFull(user,selectedChat.users).pic} />
 
               </>
             ) : (
-              <>{selectedChat.chatName.toUpperCase()}</>
+              <>
+                  {selectedChat.chatName.toUpperCase()}
+                  <UpdateGroupChatModel/>
+              </>
             )}
           </Text>
           <Box 
