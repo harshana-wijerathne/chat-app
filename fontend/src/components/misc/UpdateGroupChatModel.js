@@ -16,7 +16,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import UserListItem from "../user-avatar/UserListItem";
 
-const UpdateGroupChatModel = ({fetchAgain , setFetchAgain ,isOpen ,onClose , title,pic}) => {
+const UpdateGroupChatModel = ({fetchAgain , setFetchAgain,fetchMessages ,isOpen ,onClose , title,pic}) => {
 
     const [groupChatName, setGroupChatName] = useState();
     const [search, setSearch] = useState("");
@@ -55,7 +55,7 @@ const UpdateGroupChatModel = ({fetchAgain , setFetchAgain ,isOpen ,onClose , tit
 
             user1._id === user._id ? setSelectedChat() : setSelectedChat(data);
             setFetchAgain(!fetchAgain);
-            // fetchMessages();
+            fetchMessages();
             setLoading(false);
         } catch (error) {
             toast.warn("Error Occured!");

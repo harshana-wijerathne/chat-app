@@ -9,6 +9,7 @@ import UpdateGroupChatModel from "./misc/UpdateGroupChatModel";
 import axios from "axios";
 import {toast} from "react-toastify";
 import './style.css';
+import ScrollableChat from "./ScrollableChat";
 
 const SingleChat = ({fetchAgain,setFetchAgain}) => {
       const {
@@ -118,6 +119,7 @@ const SingleChat = ({fetchAgain,setFetchAgain}) => {
                   <UpdateGroupChatModel
                       fetchAgain={fetchAgain}
                       setFetchAgain={setFetchAgain}
+                      fetchMessages={fetchMessages}
 
                   />
               </>
@@ -142,7 +144,9 @@ const SingleChat = ({fetchAgain,setFetchAgain}) => {
                   alignSelf={'center'}
                   margin={'auto'}
                   /> ): (
-                      <div>Messages</div>
+                      <div className="messages">
+                          <ScrollableChat messages={messages}/>
+                      </div>
               )}
               <Box onKeyDown={sendMessage} mt={3} >
                   <Input
