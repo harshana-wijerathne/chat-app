@@ -24,9 +24,9 @@ app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/message", chatRoutes);
 
-//app.use(cors);
-//app.use(notFound);
-//app.use(errorHandler);
+// app.use(cors);
+// app.use(notFound);
+// app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 app.listen(5000, console.log(`Server Started on PORT ${PORT}`.yellow.bold));
