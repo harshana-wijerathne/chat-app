@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { ChatState } from "../../context/ChatProvider";
+import { ChatState } from "../context/ChatProvider";
 import axios from "axios";
 import { Box, Stack, Text } from "@chakra-ui/react";
 import { ToastContainer, toast } from "react-toastify";
-import ChatLoading from "../ChatLoading";
-import { getSender } from "../../config/ChatLogics";
-import GroupChatModel from "./GroupChatModel";
+import ChatLoading from "./ChatLoading";
+import { getSender } from "../config/ChatLogics";
+import GroupChatModel from "./misc/GroupChatModel";
 
-const MyCahts = ({fetchAgain}) => {
+const MyChats = ({fetchAgain}) => {
   const [loggedUser, setLoggedUser] = useState();
   const { user, selectedChat, setSelectedChat, chats, setChats } = ChatState();
 
@@ -68,6 +68,7 @@ const MyCahts = ({fetchAgain}) => {
         overflowY="hidden"
       >
         {chats ? (
+
           <Stack overflowY="scroll">
             {chats.map((chat) => (
               <Box
@@ -86,12 +87,13 @@ const MyCahts = ({fetchAgain}) => {
                     : chat.chatName}
                 </Text>
                 {chat.latestMessage && (
-                  <Text fontSize="xs">
-                    <b>{chat.latestMessage.sender.name} : </b>
-                    {chat.latestMessage.content.length > 50
-                      ? chat.latestMessage.content.substring(0, 51) + "..."
-                      : chat.latestMessage.content}
-                  </Text>
+                    <div></div>
+                  // <Text fontSize="xs">
+                  //   <b>{chat.latestMessage.sender.name} : </b>
+                  //   {chat.latestMessage.content.length > 50
+                  //     ? chat.latestMessage.content.substring(0, 51) + "..."
+                  //     : chat.latestMessage.content}
+                  // </Text>
                 )}
               </Box>
             ))}
@@ -113,4 +115,4 @@ const MyCahts = ({fetchAgain}) => {
   );
 };
 
-export default MyCahts;
+export default MyChats;
