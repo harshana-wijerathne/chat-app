@@ -1,5 +1,5 @@
-// import { Avatar } from "@chakra-ui/avatar";
-// import { Tooltip } from "@chakra-ui/tooltip";
+import { Avatar } from "@chakra-ui/avatar";
+import { Tooltip } from "@chakra-ui/tooltip";
 import ScrollableFeed from "react-scrollable-feed";
 import {
     isLastMessage,
@@ -17,19 +17,21 @@ const ScrollableChat = ({ messages }) => {
             {messages &&
                 messages.map((m, i) => (
                     <div style={{ display: "flex" }} key={m._id}>
-                        {/*{(isSameSender(messages, m, i, user._id) ||*/}
-                        {/*    isLastMessage(messages, i, user._id)) && (*/}
-                        {/*    <Tooltip label={m.sender.name} placement="bottom-start" hasArrow>*/}
-                        {/*        <Avatar*/}
-                        {/*            mt="7px"*/}
-                        {/*            mr={1}*/}
-                        {/*            size="sm"*/}
-                        {/*            cursor="pointer"*/}
-                        {/*            name={m.sender.name}*/}
-                        {/*            src={m.sender.pic}*/}
-                        {/*        />*/}
-                        {/*    </Tooltip>*/}
-                        {/*)}*/}
+                        {(isSameSender(messages, m, i, user._id) ||
+                            isLastMessage(messages, i, user._id)) && (
+                            <Tooltip label={m.sender.name} placement="bottom-start" hasArrow>
+                                <Avatar
+                                    mt="7px"
+                                    mr={1}
+                                    width="30px"
+                                    height="30px"
+                                    borderRadius="50%"
+                                    cursor="pointer"
+                                    name={m.sender.name}
+                                    src={m.sender.pic}
+                                />
+                            </Tooltip>
+                        )}
                         <span
                             style={{
                                 backgroundColor: `${
