@@ -10,6 +10,10 @@ import axios from "axios";
 import {toast} from "react-toastify";
 import './style.css';
 import ScrollableChat from "./ScrollableChat";
+import {io} from "socket.io-client";
+
+const ENDPOINT = "http://localhost:5000";
+var socket , selectedChatCompare;
 
 const SingleChat = ({fetchAgain,setFetchAgain}) => {
       const {
@@ -26,6 +30,12 @@ const SingleChat = ({fetchAgain,setFetchAgain}) => {
       const [typing, setTyping] = useState(false);
       const [isTyping, setIsTyping] = useState(false);
 
+
+    useEffect(()=>{
+        socket = io(ENDPOINT);
+        socket.emit("setup",user);
+        socket.on("connection", () => setSocketConnected(true));
+    },[]);
 
     const fetchMessages = async () => {
         if (!selectedChat) return;
@@ -45,6 +55,7 @@ const SingleChat = ({fetchAgain,setFetchAgain}) => {
             console.log(messages)
             setMessages(data);
             setLoading(false);
+            socket.emit("join chat", selectedChat._id);
 
         } catch (error) {
             toast.warn("Failed to fetch messages.");
@@ -69,6 +80,7 @@ const SingleChat = ({fetchAgain,setFetchAgain}) => {
                     config
                 );
                 console.log(data);
+                socket.emit("new message", data);
                 setMessages([...messages,data]);
 
             } catch (error) {
@@ -83,7 +95,20 @@ const SingleChat = ({fetchAgain,setFetchAgain}) => {
 
       useEffect(() => {
           fetchMessages();
-      },[selectedChat])
+          selectedChatCompare = selectedChat;
+      },[selectedChat]);
+
+      useEffect(()=>{
+       socket.on("message recieved", async (newMessageRecieved) => {
+           if(!selectedChatCompare || selectedChatCompare._id !== newMessageRecieved.chat._id){
+               //give notification
+           }else {
+               setMessages([...messages,newMessageRecieved]);
+           }
+       })
+      })
+
+
 
   return (
     <>

@@ -88,7 +88,7 @@ const Login = () => {
         colorPalette="blue"
         width="1/2"
         onClick={submitHander}
-        l
+
       >
         Login
       </Button>
